@@ -107,14 +107,22 @@ if __name__ == "__main__":
         # - action: action.left_hand: (16, 6)
         # - action: action.right_hand: (16, 6)
         # - action: action.waist: (16, 3)
+        # obs = {
+        #     "video.ego_view": np.random.randint(0, 256, (1, 256, 256, 3), dtype=np.uint8),
+        #     "state.left_arm": np.random.rand(1, 7),
+        #     "state.right_arm": np.random.rand(1, 7),
+        #     "state.left_hand": np.random.rand(1, 6),
+        #     "state.right_hand": np.random.rand(1, 6),
+        #     "state.waist": np.random.rand(1, 3),
+        #     "annotation.human.action.task_description": ["do your thing!"],
+        # }
         obs = {
-            "video.ego_view": np.random.randint(0, 256, (1, 256, 256, 3), dtype=np.uint8),
+            "video.webcam": np.random.randint(0, 256, (1, 356, 630, 3), dtype=np.uint8),
             "state.left_arm": np.random.rand(1, 7),
+            "state.left_hand": np.random.rand(1, 1),
             "state.right_arm": np.random.rand(1, 7),
-            "state.left_hand": np.random.rand(1, 6),
-            "state.right_hand": np.random.rand(1, 6),
-            "state.waist": np.random.rand(1, 3),
-            "annotation.human.action.task_description": ["do your thing!"],
+            "state.right_hand": np.random.rand(1, 1),
+            "annotation.human.action.task_description": ["Find and grasp the white terminal at the end of the red wire."],
         }
 
         time_start = time.time()
@@ -122,7 +130,7 @@ if __name__ == "__main__":
         print(f"Total time taken to get action from server: {time.time() - time_start} seconds")
 
         for key, value in action.items():
-            print(f"Action: {key}: {value.shape}")
+            print(f"Action: {key}: {value.shape} {value}")
 
     else:
         raise ValueError("Please specify either --server or --client")
